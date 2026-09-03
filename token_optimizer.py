@@ -78,7 +78,7 @@ class TokenOptimizer:
     def _cache(self):
         if not self.cache_uri:
             return None
-        from gptcache import Client
+        from gptcache.client import Client
 
         return Client(uri=self.cache_uri)
 
@@ -103,7 +103,10 @@ class TokenOptimizer:
         cache = self._cache()
         key = self._cache_key(optimized, self.model)
         if cache:
-            cached = cache.get(key)
+            try:
+                cached = cache.get(key)
+            except Exception:
+                cached = None
             if cached:
                 return cached
 
@@ -114,7 +117,10 @@ class TokenOptimizer:
         )
         answer = response.choices[0].message.content or ""
         if cache:
-            cache.put(key, answer)
+            try:
+                cache.put(key, answer)
+            except Exception:
+                pass
         return answer
 
 
