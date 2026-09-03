@@ -1,0 +1,4 @@
+openai>=1.0.0,<2.0.0
+tiktoken>=0.9.0,<1.0.0
+llmlingua==0.2.2
+gptcache==0.1.44
